@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3: Cambio de imagen al pasar el ratón</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .contenedor-imagen {
+            margin: 0 auto;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        #miImagen {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease; 
+        }
+
+        #miImagen:hover {
+            transform: scale(1.05); 
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ejercicio 3: Cambio de Imagen al Pasar el Ratón</h2>
+
+    <div class="contenedor-imagen">
+
+        <img id="miImagen" 
+             src="img/foto1.jpg" 
+             alt="Imagen 1"
+             onmouseover="cambiarImagen()"> 
+    </div>
+
+    <p>Pasa el ratón por encima de la imagen</p>
+
+    <script>
+        const imagen = document.getElementById("miImagen");
+
+        const misFotos = ["img/foto1.jpg", "img/foto2.jpg", "img/foto3.jpg"];
+        
+        let indiceActual = 0;
+
+        function cambiarImagen() {
+
+            indiceActual = indiceActual + 1;
+            
+            if (indiceActual >= misFotos.length) {
+                indiceActual = 0;
+            }
+
+            imagen.src = misFotos[indiceActual];
+            imagen.alt = "Imagen " + (indiceActual + 1); 
+        }
+    </script>
+</body>
+</html>

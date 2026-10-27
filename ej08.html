@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8: Carrusel de Imágenes</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background-color: #eef2f3; 
+            margin: 0;
+            padding-top: 50px;
+        }
+
+        .carousel-container {
+            position: relative; 
+            max-width: 600px; 
+            margin: 0 auto;
+            overflow: hidden; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .carousel-slide img {
+            width: 100%; 
+            height: 350px; 
+            object-fit: cover; 
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide img.active { 
+            display: block; 
+        }
+
+        .btn-nav {
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5); 
+            color: white; 
+            border: none;
+            padding: 15px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .btn-nav:hover { 
+            background-color: rgba(0,0,0,0.8); 
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Ejercicio 8: Carrusel de Imágenes Automático</h2>
+    
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <img class="active" src="img/imagen1.jpg" alt="Imagen 1">
+            <img src="img/imagen2.webp" alt="Imagen 2">
+            <img src="img/imagen3.jpg" alt="Imagen 3">
+            <img src="img/imagen4.jpg" alt="Imagen 4">
+            <img src="img/imagen5.webp" alt="Imagen 5">
+        </div>
+        <button class="btn-nav prev" onclick="moverImagen(-1)">&#10094;</button>
+        <button class="btn-nav next" onclick="moverImagen(1)">&#10095;</button>
+    </div>
+
+    <script>
+        let indiceActual = 0;
+        const imagenes = document.querySelectorAll('.carousel-slide img');
+        const totalImagenes = imagenes.length;
+        let intervalo;
+
+        function mostrarImagen(indice) {
+            imagenes.forEach(img => img.classList.remove('active'));
+            imagenes[indice].classList.add('active');
+        }
+
+        function moverImagen(paso) {
+            indiceActual += paso;
+            if (indiceActual >= totalImagenes) { indiceActual = 0; }
+            if (indiceActual < 0) { indiceActual = totalImagenes - 1; }
+            mostrarImagen(indiceActual);
+            reiniciarIntervalo();
+        }
+
+        function iniciarIntervalo() {
+            intervalo = setInterval(() => { moverImagen(1); }, 3000);
+        }
+
+        function reiniciarIntervalo() {
+            clearInterval(intervalo);
+            iniciarIntervalo();
+        }
+
+        iniciarIntervalo();
+    </script>
+</body>
+</html>

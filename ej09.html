@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 9: Cuenta Regresiva</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #282c34; color: white; margin: 0; }
+        .timer-box { text-align: center; background-color: #078e34; padding: 40px; border-radius: 15px; box-shadow: 0 10px 20px rgba(118, 5, 5, 0.5); }
+        #display {
+            font-size: 6rem; font-weight: bold; margin: 20px 0;
+            color: #0a1589; text-shadow: 0 0 20px rgba(97, 218, 251, 0.5);
+        }
+        .controls button {
+            font-size: 1.2rem; padding: 10px 20px; margin: 0 10px;
+            border: none; border-radius: 5px; cursor: pointer;
+            background-color: #61dafb; color: #0e52db; font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .controls button:hover { background-color: #21a1f1; }
+        .alerta { color: #ff4c4c !important; text-shadow: 0 0 20px rgba(255, 76, 76, 0.5); }
+    </style>
+</head>
+<body>
+
+    <div class="timer-box">
+        <h2>Cuenta Regresiva</h2>
+        <div id="display">10</div>
+        <div class="controls">
+            <button onclick="iniciarTemporizador()">Iniciar</button>
+            <button onclick="reiniciarTemporizador()">Reiniciar</button>
+        </div>
+    </div>
+
+    <script>
+        let tiempoRestante = 10;
+        let intervalo = null;
+
+        const display = document.getElementById('display');
+
+        function actualizarDisplay() {
+            display.textContent = tiempoRestante;
+            if (tiempoRestante <= 3) {
+                display.classList.add('alerta');
+            } else {
+                display.classList.remove('alerta');
+            }
+        }
+
+        function iniciarTemporizador() {
+            if (intervalo) clearInterval(intervalo);
+            
+            intervalo = setInterval(() => {
+                if (tiempoRestante > 0) {
+                    tiempoRestante--;
+                    actualizarDisplay();
+                } else {
+                    clearInterval(intervalo);
+                    display.textContent = "¡Tiempo!";
+                    display.classList.add('alerta');
+                }
+            }, 1000);
+        }
+
+        function reiniciarTemporizador() {
+            clearInterval(intervalo);
+            tiempoRestante = 10;
+            display.classList.remove('alerta');
+            actualizarDisplay();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio 5 - Validación de Formulario</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; background: #f5f5f5; }
+    h1 { color: #1d2f41; }
+    form {
+      background: white;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    label { display: block; margin-top: 16px; font-weight: bold; color: #333; }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    input:focus { border-color: #2980b9; outline: none; }
+    .error { color: rgb(110, 1, 1); font-size: 0.85em; margin-top: 4px; display: none; }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover { background: #1a5f8e; }
+    #mensaje {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: bold;
+    }
+    a { display: block; margin-top: 30px; color: #888; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Ejercicio 5 — Validación de Formulario</h1>
+  <form onsubmit="validar(event)">
+    <label>Nombre</label>
+    <input type="text" id="nombre" placeholder="Tu nombre completo">
+    <span class="error" id="errNombre">Por favor ingresa tu nombre.</span>
+
+    <label>Correo Electrónico</label>
+    <input type="text" id="correo" placeholder="ejemplo@correo.com">
+    <span class="error" id="errCorreo">Ingresa un correo válido.</span>
+
+    <label>Contraseña</label>
+    <input type="password" id="contrasena" placeholder="Mínimo 6 caracteres">
+    <span class="error" id="errContrasena">La contraseña debe tener al menos 6 caracteres.</span>
+
+    <button type="submit">Enviar Formulario</button>
+    <div id="mensaje"></div>
+  </form>
+  <a href="index.html">← Volver al menú</a>
+
+  <script>
+    function validar(evento) {
+      evento.preventDefault(); // Evita que la página se recargue
+      var valido = true;
+
+      var nombre = document.getElementById("nombre").value.trim();
+      var correo = document.getElementById("correo").value.trim();
+      var contrasena = document.getElementById("contrasena").value;
+
+      // Validar nombre
+      if (nombre === "") {
+        document.getElementById("errNombre").style.display = "block";
+        valido = false;
+      } else {
+        document.getElementById("errNombre").style.display = "none";
+      }
+
+      // Validar correo (debe tener @ y un punto después)
+      var regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regexCorreo.test(correo)) {
+        document.getElementById("errCorreo").style.display = "block";
+        valido = false;
+      } else {
+        document.getElementById("errCorreo").style.display = "none";
+      }
+
+      // Validar contraseña
+      if (contrasena.length < 6) {
+        document.getElementById("errContrasena").style.display = "block";
+        valido = false;
+      } else {
+        document.getElementById("errContrasena").style.display = "none";
+      }
+
+      // Mostrar resultado
+      var msg = document.getElementById("mensaje");
+      if (valido) {
+        msg.style.display = "block";
+        msg.style.backgroundColor = "#d4edda";
+        msg.style.color = "#155724";
+        msg.textContent = "✅ Formulario enviado correctamente. ¡Bienvenido, " + nombre + "!";
+      } else {
+        msg.style.display = "block";
+        msg.style.backgroundColor = "#f8d7da";
+        msg.style.color = "#721c24";
+        msg.textContent = "❌ Por favor corrige los errores antes de enviar.";
+      }
+    }
+  </script>
+</body>
+</html>
